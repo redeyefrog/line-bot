@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+    <!--  output to console  -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%-5level [%thread] %logger{45} : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="console" />
+    </root>
+
+    <!-- output sql to console and file -->
+    <logger name="org.hibernate.SQL" level="debug" additivity="false">
+        <appender-ref ref="console" />
+    </logger>
+    <!-- output sql parameters to console and file -->
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="trace" additivity="false">
+        <appender-ref ref="console" />
+    </logger>
+
+    <logger name="com.redeyefrog" level="info" additivity="false">
+        <appender-ref ref="console" />
+    </logger>
+
+    <logger name="com.linecorp" level="error" additivity="false">
+        <appender-ref ref="console" />
+    </logger>
+
+</configuration>
