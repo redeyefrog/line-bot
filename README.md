@@ -1,5 +1,5 @@
 # line-bot
-echo line bot and return different message with keyword.
+echo line bot or reply different message with keyword.
 
 ## Usage
 the application use spring boot and add this to pom.xml
