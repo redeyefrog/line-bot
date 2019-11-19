@@ -40,9 +40,11 @@ public class FollowEventHandler extends CommonHandler {
 
             transaction.saveLineSource(source);
 
-            sb.append(profile.getDisplayName()).append("感謝您將本帳號加入好友").appendCodePoint(Integer.decode("0x100001")).append(System.lineSeparator()).append("Happy New Year!!").appendCodePoint(Integer.decode("0x10002D"));
+            sb.append(profile.getDisplayName()).append("感謝您將本帳號加入好友").appendCodePoint(Integer.decode("0x100001")).append(System.lineSeparator()).append("Have a Nice Day!!").appendCodePoint(Integer.decode("0x10002D"));
         } catch(Exception e) {
-            sb.append("有錯誤!!").appendCodePoint(Integer.decode("0x10007D")).append(System.lineSeparator()).append(e.getMessage());
+            sb.append("error occur!!").appendCodePoint(Integer.decode("0x10007D")).append(System.lineSeparator()).append(e.getMessage());
+
+            log.error("error occur: {}", e.getMessage(), e);
         }
 
         return getReplyMessage(sb.toString());
