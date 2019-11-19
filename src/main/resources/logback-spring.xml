@@ -25,7 +25,7 @@
         <appender-ref ref="console" />
     </logger>
 
-    <logger name="com.linecorp" level="error" additivity="false">
+    <logger name="com.linecorp" level="info" additivity="false">
         <appender-ref ref="console" />
     </logger>
 
