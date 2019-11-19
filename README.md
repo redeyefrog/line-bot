@@ -1,7 +1,14 @@
 # line-bot
-echo line bot and will return different message with keyword.
+echo line bot and return different message with keyword.
 
 ## Usage
+the application use spring boot and add this to pom.xml
+
+    <dependency>
+        <groupId>com.linecorp.bot</groupId>
+        <artifactId>line-bot-spring-boot</artifactId>
+        <version>3.1.0</version>
+    </dependency>
 
 ### Step1
 Line Developer Account:
