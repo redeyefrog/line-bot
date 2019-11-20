@@ -2,13 +2,19 @@
 echo line bot or reply different message with keyword.
 
 ## Usage
-the application use spring boot and add this to pom.xml
+in pom.xml
 
     <dependency>
         <groupId>com.linecorp.bot</groupId>
         <artifactId>line-bot-spring-boot</artifactId>
         <version>3.1.0</version>
     </dependency>
+
+in application.properties
+
+    line.bot.channelSecret = ${LINE_BOT_CHANNEL_SECRET}
+    line.bot.channelToken = ${LINE_BOT_CHANNEL_TOKEN}
+    line.bot.handler.path = /callback
 
 ### Step1
 Line Developer Account:
