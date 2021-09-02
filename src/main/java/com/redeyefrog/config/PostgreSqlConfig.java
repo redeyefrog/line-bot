@@ -11,8 +11,8 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
 @EnableJpaRepositories(basePackages = {"com.redeyefrog.persistence.dao"}, entityManagerFactoryRef = "getEntityManagerFactory")
+@Configuration
 public class PostgreSqlConfig {
 
     @Bean
@@ -37,7 +37,7 @@ public class PostgreSqlConfig {
     }
 
     private Map<String, Object> getProperties() {
-        Map<String , Object> props = new HashMap<>();
+        Map<String, Object> props = new HashMap<>();
 
         props.put("hibernate.format_sql", true);
 
