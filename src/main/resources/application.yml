@@ -3,3 +3,7 @@ line:
     channel-secret: ${LINE_BOT_CHANNEL_SECRET}
     channel-token: ${LINE_BOT_CHANNEL_TOKEN}
     handler.path: /callback
+
+spring:
+  jpa:
+    open-in-view: false
