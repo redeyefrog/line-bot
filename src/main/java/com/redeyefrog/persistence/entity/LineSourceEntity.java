@@ -10,10 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "LINE_SOURCE")
 @Data
-@SuppressWarnings("serial")
+@Table(name = "LINE_SOURCE")
+@Entity
 public class LineSourceEntity implements Serializable {
 
     @Id
