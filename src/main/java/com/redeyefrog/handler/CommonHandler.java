@@ -20,10 +20,10 @@ public abstract class CommonHandler {
     protected static Logger log = LoggerFactory.getLogger(CommonHandler.class);
 
     @Autowired
-    protected LineMessagingClient client;
+    protected LineMessagingClient lineMessagingClient;
 
     @Autowired
-    protected LineMessageDao dao;
+    protected LineMessageDao lineMessageDao;
 
     public Message leave(Event event) {
         Source source = event.getSource();
@@ -32,11 +32,11 @@ public abstract class CommonHandler {
 
         try {
             if (source instanceof GroupSource) {
-                client.leaveGroup(((GroupSource) source).getGroupId()).get();
+                lineMessagingClient.leaveGroup(((GroupSource) source).getGroupId()).get();
             } else if (source instanceof RoomSource) {
-                client.leaveRoom(((RoomSource) source).getRoomId()).get();
+                lineMessagingClient.leaveRoom(((RoomSource) source).getRoomId()).get();
             } else {
-                message = dao.getByKeyword("not leave").getReplyMessage();
+                message = lineMessageDao.getByKeyword("not leave").getReplyMessage();
             }
         } catch(Exception e) {
             log.error("leave error: {}", e.getMessage(), e);

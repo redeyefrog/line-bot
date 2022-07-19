@@ -2,9 +2,12 @@ package com.redeyefrog.handler;
 
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
+import com.linecorp.bot.model.event.source.Source;
 import com.linecorp.bot.model.message.TextMessage;
 import com.redeyefrog.enums.Symbols;
+import com.redeyefrog.persistence.dao.LineSourceDao;
 import com.redeyefrog.persistence.entity.LineMessageEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -18,10 +21,23 @@ import java.util.stream.Stream;
 @Service
 public class TextMessageHandler extends CommonHandler {
 
-    public TextMessage getReplyMessage(MessageEvent<TextMessageContent> event) {
-        List<LineMessageEntity> entities = findAllReplyMessage();
+    @Autowired
+    private LineSourceDao lineSourceDao;
 
-        return getReplyMessage(composeMessage(event.getMessage().getText(), entities));
+    public TextMessage getReplyMessage(MessageEvent<TextMessageContent> event) {
+        if (isReply(event.getSource())) {
+            List<LineMessageEntity> entities = findAllReplyMessage();
+
+            return getReplyMessage(composeMessage(event.getMessage().getText(), entities));
+        }
+
+        return null;
+    }
+
+    private boolean isReply(Source source) {
+        String userId = source.getUserId();
+
+        return lineSourceDao.countByIdAndIsReply(userId) > 0;
     }
 
     private List<LineMessageEntity> findAllReplyMessage() {
@@ -29,10 +45,10 @@ public class TextMessageHandler extends CommonHandler {
 
         String equalSymbol = Symbols.EQUAL.getValue();
 
-        dao.findAll().stream().forEach(entity -> {
+        lineMessageDao.findAll().stream().forEach(entity -> {
             String keyword = entity.getKeyword();
 
-            if(entity.getKeyword().contains(equalSymbol)) {
+            if (entity.getKeyword().contains(equalSymbol)) {
                 Stream.of(keyword.split(equalSymbol)).forEach(newKeyword -> {
                     LineMessageEntity newEntity = new LineMessageEntity();
 
@@ -50,10 +66,10 @@ public class TextMessageHandler extends CommonHandler {
     }
 
     private String composeMessage(String message, List<LineMessageEntity> entities) {
-        for(LineMessageEntity entity : entities) {
+        for (LineMessageEntity entity : entities) {
             String keyword = entity.getKeyword();
 
-            if(message.contains(keyword)) {
+            if (message.contains(keyword)) {
 
                 return composeReplyMessage(message, entity.getReplyMessage()).replaceAll("\\\\r\\\\n", System.lineSeparator());
             }
@@ -63,7 +79,7 @@ public class TextMessageHandler extends CommonHandler {
     }
 
     private String composeReplyMessage(String message, String replyMessage) {
-        if(message.contains(Symbols.OPEN_BRACKET.getValue()) && message.contains(Symbols.CLOSE_BRACKET.getValue())) {
+        if (message.contains(Symbols.OPEN_BRACKET.getValue()) && message.contains(Symbols.CLOSE_BRACKET.getValue())) {
 
             return composeSearchMessage(message, replyMessage);
         } else {
@@ -76,7 +92,7 @@ public class TextMessageHandler extends CommonHandler {
         String openBracket = Symbols.OPEN_BRACKET.getValue();
         String closeBracket = Symbols.CLOSE_BRACKET.getValue();
 
-        if(message.contains(openBracket) && message.contains(closeBracket)) {
+        if (message.contains(openBracket) && message.contains(closeBracket)) {
             int beginIdx = message.indexOf(openBracket) + 1;
             int endIdx = message.indexOf(closeBracket);
 

@@ -27,15 +27,15 @@ public class FollowEventHandler extends CommonHandler {
             if(source instanceof GroupSource) {
                 String id = ((GroupSource) source).getGroupId();
 
-                profile = client.getGroupMemberProfile(id, source.getUserId()).get();
+                profile = lineMessagingClient.getGroupMemberProfile(id, source.getUserId()).get();
             } else if(source instanceof RoomSource) {
                 String id = ((RoomSource) source).getRoomId();
 
-                profile = client.getRoomMemberProfile(id, source.getUserId()).get();
+                profile = lineMessagingClient.getRoomMemberProfile(id, source.getUserId()).get();
             } else {
                 String id = source.getUserId();
 
-                profile = client.getProfile(id).get();
+                profile = lineMessagingClient.getProfile(id).get();
             }
 
             transaction.saveLineSource(source);

@@ -19,14 +19,11 @@ public class MessageLogAspect {
         Object obj = null;
         try {
             log.info("<<start>> class: {}, method: {}, args: {}", signature.getDeclaringTypeName(), signature.getName(), point.getArgs());
-
             obj = point.proceed();
         } catch (Throwable t) {
             log.error("<<error>> class: {}, method: {}, throw: {}", signature.getDeclaringTypeName(), signature.getName(), t.getMessage(), t);
-
         } finally {
             log.info("<<end>> class: {}, method: {}, obj: {}", signature.getDeclaringTypeName(), signature.getName(), obj);
-
         }
 
         return obj;

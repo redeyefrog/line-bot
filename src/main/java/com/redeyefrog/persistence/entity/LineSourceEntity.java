@@ -26,4 +26,7 @@ public class LineSourceEntity implements Serializable {
     @Column(name = "TYPE")
     private String type;
 
+    @Column(name = "IS_REPLY")
+    private String isReply = "Y";
+
 }

@@ -13,4 +13,7 @@ public interface LineSourceDao extends JpaRepository<LineSourceEntity, Long> {
 
     LineSourceEntity getById(String id);
 
+    @Query(value = "SELECT COUNT(seq) FROM LineSourceEntity WHERE id = ?1 AND isReply = 'Y'")
+    int countByIdAndIsReply(String id);
+
 }
